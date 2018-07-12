@@ -21,6 +21,7 @@ import io.micrometer.core.lang.Nullable;
 import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.function.DoubleSupplier;
 import java.util.function.ToDoubleFunction;
 import java.util.function.ToLongFunction;
 
@@ -195,6 +196,29 @@ public class Metrics {
     @Nullable
     public static <T> T gauge(String name, T obj, ToDoubleFunction<T> valueFunction) {
         return globalRegistry.gauge(name, obj, valueFunction);
+    }
+
+    /**
+     * Register a gauge that reports the value provided by the {@link DoubleSupplier}.
+     *
+     * @param name              Name of the gauge being registered.
+     * @param tags              Sequence of dimensions for breaking down the name.
+     * @param doubleSupplier	A {@link DoubleSupplier} that will provide the value for the gauge when called.
+     */
+    @Nullable
+    public static void gauge(String name, Iterable<Tag> tags, DoubleSupplier doubleSupplier) {
+        globalRegistry.gauge(name, tags, doubleSupplier);
+    }
+
+    /**
+     * Register a gauge that reports the value provided by the {@link DoubleSupplier}.
+     *
+     * @param name              Name of the gauge being registered.
+     * @param doubleSupplier	A {@link DoubleSupplier} that will provide the value for the gauge when called.
+     */
+    @Nullable
+    public static void gauge(String name, DoubleSupplier doubleSupplier) {
+        globalRegistry.gauge(name, doubleSupplier);
     }
 
     /**

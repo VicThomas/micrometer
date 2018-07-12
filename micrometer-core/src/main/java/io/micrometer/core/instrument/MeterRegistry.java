@@ -477,12 +477,10 @@ public abstract class MeterRegistry implements AutoCloseable {
      * @param name              Name of the gauge being registered.
      * @param tags              Sequence of dimensions for breaking down the name.
      * @param doubleSupplier	A {@link DoubleSupplier} that will provide the value for the gauge when called.
-     * @return The number that was passed in so the registration can be done as part of an assignment
-     * statement.
      */
     @Nullable
     public void gauge(String name, Iterable<Tag> tags, DoubleSupplier doubleSupplier) {
-        Gauge.builder(name, Object.class, o -> doubleSupplier.getAsDouble()).tags(tags).register(this);
+        gauge(name, tags, Object.class, o -> doubleSupplier.getAsDouble());
     }
 
     /**
@@ -490,12 +488,10 @@ public abstract class MeterRegistry implements AutoCloseable {
      *
      * @param name              Name of the gauge being registered.
      * @param doubleSupplier	A {@link DoubleSupplier} that will provide the value for the gauge when called.
-     * @return The number that was passed in so the registration can be done as part of an assignment
-     * statement.
      */
     @Nullable
     public void gauge(String name, DoubleSupplier doubleSupplier) {
-        Gauge.builder(name, Object.class, o -> doubleSupplier.getAsDouble()).register(this);
+        gauge(name, emptyList(), doubleSupplier);
     }
 
     /**
