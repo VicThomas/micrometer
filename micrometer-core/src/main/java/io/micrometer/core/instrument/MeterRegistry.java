@@ -472,6 +472,44 @@ public abstract class MeterRegistry implements AutoCloseable {
     }
 
     /**
+     * Provides the functional interface necessary such that Gauges can be created with simple lambda expressions that
+     * return a double.
+     */
+    @FunctionalInterface
+    public static interface ToDoubleSupplier {
+        double get();
+    }
+
+    /**
+     * Register a gauge that reports the value provided by the {@link ToDoubleSupplier}.
+     *
+     * @param name              Name of the gauge being registered.
+     * @param tags              Sequence of dimensions for breaking down the name.
+     * @param toDoubleSupplier	A {@link ToDoubleSupplier} that will provide the value for the gauge when called.
+     * @return The number that was passed in so the registration can be done as part of an assignment
+     * statement.
+     */
+    @Nullable
+    public void gauge(String name, Iterable<Tag> tags, ToDoubleSupplier toDoubleSupplier) {
+        Gauge.builder(name, Object.class, o -> toDoubleSupplier.get()).tags(tags).register(this);
+        return;
+    }
+
+    /**
+     * Register a gauge that reports the value provided by the {@link ToDoubleSupplier}.
+     *
+     * @param name              Name of the gauge being registered.
+     * @param toDoubleSupplier	A {@link ToDoubleSupplier} that will provide the value for the gauge when called.
+     * @return The number that was passed in so the registration can be done as part of an assignment
+     * statement.
+     */
+    @Nullable
+    public void gauge(String name, ToDoubleSupplier toDoubleSupplier) {
+        Gauge.builder(name, Object.class, o -> toDoubleSupplier.get()).register(this);
+        return;
+    }
+
+    /**
      * Register a gauge that reports the size of the {@link Collection}. The registration
      * will keep a weak reference to the collection so it will not prevent garbage collection.
      * The collection implementation used should be thread safe. Note that calling
