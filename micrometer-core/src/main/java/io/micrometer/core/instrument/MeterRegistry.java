@@ -479,7 +479,7 @@ public abstract class MeterRegistry implements AutoCloseable {
      * @param doubleSupplier	A {@link DoubleSupplier} that will provide the value for the gauge when called.
      */
     @Nullable
-    public void gauge(String name, Iterable<Tag> tags, DoubleSupplier doubleSupplier) {
+    public void gaugeSupplier(String name, Iterable<Tag> tags, DoubleSupplier doubleSupplier) {
         gauge(name, tags, Object.class, o -> doubleSupplier.getAsDouble());
     }
 
@@ -490,8 +490,8 @@ public abstract class MeterRegistry implements AutoCloseable {
      * @param doubleSupplier	A {@link DoubleSupplier} that will provide the value for the gauge when called.
      */
     @Nullable
-    public void gauge(String name, DoubleSupplier doubleSupplier) {
-        gauge(name, emptyList(), doubleSupplier);
+    public void gaugeSupplier(String name, DoubleSupplier doubleSupplier) {
+        gaugeSupplier(name, emptyList(), doubleSupplier);
     }
 
     /**

@@ -22,7 +22,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.DoubleSupplier;
 
 import static java.util.Collections.emptyList;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -82,7 +81,7 @@ interface GaugeTest {
     @Test
     @DisplayName("gauges that use a DoubleSupplier")
     default void supplierGauge(MeterRegistry registry) {
-        registry.gauge("my.gauge", emptyList(), (DoubleSupplier) () -> 1);
+        registry.gaugeSupplier("my.gauge", emptyList(), () -> 1);
         Gauge g = registry.get("my.gauge").gauge();
         assertThat(g.value()).isEqualTo(1);
     }

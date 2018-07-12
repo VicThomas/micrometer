@@ -206,8 +206,8 @@ public class Metrics {
      * @param doubleSupplier	A {@link DoubleSupplier} that will provide the value for the gauge when called.
      */
     @Nullable
-    public static void gauge(String name, Iterable<Tag> tags, DoubleSupplier doubleSupplier) {
-        globalRegistry.gauge(name, tags, doubleSupplier);
+    public static void gaugeSupplier(String name, Iterable<Tag> tags, DoubleSupplier doubleSupplier) {
+        globalRegistry.gaugeSupplier(name, tags, doubleSupplier);
     }
 
     /**
@@ -217,8 +217,8 @@ public class Metrics {
      * @param doubleSupplier	A {@link DoubleSupplier} that will provide the value for the gauge when called.
      */
     @Nullable
-    public static void gauge(String name, DoubleSupplier doubleSupplier) {
-        globalRegistry.gauge(name, doubleSupplier);
+    public static void gaugeSupplier(String name, DoubleSupplier doubleSupplier) {
+        globalRegistry.gaugeSupplier(name, doubleSupplier);
     }
 
     /**
