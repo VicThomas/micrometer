@@ -483,7 +483,6 @@ public abstract class MeterRegistry implements AutoCloseable {
     @Nullable
     public void gauge(String name, Iterable<Tag> tags, DoubleSupplier doubleSupplier) {
         Gauge.builder(name, Object.class, o -> doubleSupplier.getAsDouble()).tags(tags).register(this);
-        return;
     }
 
     /**
@@ -497,7 +496,6 @@ public abstract class MeterRegistry implements AutoCloseable {
     @Nullable
     public void gauge(String name, DoubleSupplier doubleSupplier) {
         Gauge.builder(name, Object.class, o -> doubleSupplier.getAsDouble()).register(this);
-        return;
     }
 
     /**
